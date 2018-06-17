@@ -5,24 +5,24 @@ import pickle
 
 pygame.init()
 
-# Variables statiques
+# Constantes
 
-white = (255,255,255)
-curious=(237,155,120)
-curious2=(255,255,128)
-cDark=(200,200,128)
+#white = (255,255,255)
+#curious=(237,155,120)
+#curious2=(255,255,128)
+#cDark=(200,200,128)
 black = (0,0,0)
-red = (255,0,0)
-redClear=(155,0,0)
+#red = (255,0,0)
+#redClear=(155,0,0)
 redbordeau=(170,105,70)
-fakegray=(195,195,195)
+#fakegray=(195,195,195)
 lavande=(200,191,231)
-blue = (0,0,255)
-green= (0,255,0)
-greenClear=(0,55,0)
-blueDark=(0,0,55)
-yellow=(255,249,0)
-violet=(255,90,255)
+#blue = (0,0,255)
+#green= (0,255,0)
+#greenClear=(0,55,0)
+#blueDark=(0,0,55)
+#yellow=(255,249,0)
+#violet=(255,90,255)
 smallfont=pygame.font.SysFont("comicsansms",30) 
 largefont2=pygame.font.SysFont("comicsanms",50)
 largefont=pygame.font.SysFont("ardelaneymoyen",38)
@@ -92,6 +92,7 @@ def dialogue(msg,color):
     message_to_screen(msg, color, x, y)
 
 def set_randomnly():
+    #need to be a 2D List
     L=[['opened_door_sheep.jpg'], ['opened_door_treasure.jpg'], ['opened_door_sheep.jpg']]
     random.shuffle(L)
     for i in range(3):
@@ -104,7 +105,7 @@ def set_randomnly():
 
     return L, treasure
     
-
+#There are 3 scenes : intro, playground, stats display
 gameExit=False
 IntroExit=False
 PlayExit=True
@@ -125,6 +126,7 @@ while not gameExit:
         
     Mouse_x=0; Mouse_y=0
     while not IntroExit :
+    #first iterations reach here
             
             event=pygame.event.poll()
             if event.type == pygame.QUIT :
@@ -132,7 +134,9 @@ while not gameExit:
                 break
             if event.type==pygame.MOUSEMOTION:
                 Mouse_x, Mouse_y=event.pos
-                
+                    
+            #coordinates of play  button
+            #Highlight management cause just MOUSEMOTION
             if Mouse_x>=830 and Mouse_x<=1063:
                             if Mouse_y<=353 and Mouse_y>=296:
                                 
@@ -154,7 +158,7 @@ while not gameExit:
             
 
             
-
+            # checking right click position, game flow logic
             if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 Mouse_x, Mouse_y=event.pos
                 
@@ -196,7 +200,7 @@ while not gameExit:
                 
                 
        
-        
+    # Enter here if play button has been pressed   
     while not PlayExit:
         
         
@@ -210,7 +214,7 @@ while not gameExit:
 
             if start:
                dialogue1=False
-               dialogue2=True  #ou presque lol
+               dialogue2=True  
                dialogue3=True
                start=False
                choisi=False
@@ -228,6 +232,8 @@ while not gameExit:
                dialogue1=True
                
             event=pygame.event.poll()
+            
+            #Chose a door by its number
             if not choisi:
        
                if event.type==pygame.KEYDOWN:
@@ -252,6 +258,8 @@ while not gameExit:
                        ouvert=False
                        dialogue('Choisir une porte par son numero', lavande)
                        SetImage('marker.jpg', 800, 386)
+                         
+            #open another door hiding a sheep            
             if not ouvert:
                  nbL=[0,1,2]
                  if choix-1==voiture:
@@ -273,7 +281,8 @@ while not gameExit:
                 pygame.display.update()
                 dialogue2=True
                 rechoisi=False
-
+            
+            #Ask for choice
             if not rechoisi:
                if event.type==pygame.KEYDOWN:
                    print(event.unicode)
@@ -353,14 +362,14 @@ while not gameExit:
                      score_p.dump(score)
                 time.sleep(3)
 
-            #if not dialogue3:
-    
+    #Enter here if stats button has been pressed from intro
     while not StatsExit:
         event=pygame.event.poll()
         if event.type == pygame.QUIT :
                 gameExit = True
                 StatsExit=True
-                
+        
+        #exit with "e"
         if event.type == pygame.KEYDOWN :
                 
                 if event.unicode=='e':
